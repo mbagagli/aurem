@@ -1,0 +1,4 @@
+# Avoid pre-compiled stuff
+*.pyc
+__pycache__
+
