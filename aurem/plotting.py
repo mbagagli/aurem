@@ -1,6 +1,7 @@
 import numpy as np
 import logging
 import matplotlib.pyplot as plt
+plt.style.context('fivethirtyeight')
 
 
 logger = logging.getLogger(__name__)

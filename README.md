@@ -19,5 +19,8 @@ For the moment this `README` is just a guide for the small functions distributed
 In this distribution we use the REC and AIC models.
 Ideally, the minimum of those model time series represent a _pronounced_ transient arrival in the time-series.
 
+For the AIC models we use two approaches:
 
+- Maeda1985: The classical approach that operates
+- Madarshahian2020: a _reciprocal-aic_ picker, similar to the above, but should be slightly more precise
 
