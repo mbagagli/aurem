@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setuptools.setup(
     name="aurem",
-    version="0.1.0",
+    version="0.1.7",
     author="Matteo Bagagli",
     author_email="matteo.bagagli@erdw.ethz.com",
     description="Auto REgressive Models for time series transient identification",

@@ -15,12 +15,12 @@ def test_aurem_rec():
     recobj.work()
     pt = recobj.get_pick()
     idx = recobj.get_pick_index()
-    # recobj.plot()
+    recobj.plot()
 
     # --- Test
     if not isinstance(pt, UTCDateTime):
         errors.append("Wrong out picktime object")
-    if pt != UTCDateTime("2009-08-24T00:20:07.710000"):
+    if pt != UTCDateTime("2009-08-24T00:20:07.700000"):
         errors.append("PickTime do not match!")
     if idx != 370:
         errors.append("PickTime IDX do not match@")
@@ -41,12 +41,12 @@ def test_aurem_aic():
     aicobj.work()
     pt = aicobj.get_pick()
     idx = aicobj.get_pick_index()
-    # aicobj.plot()
+    aicobj.plot()
 
     # --- Test
     if not isinstance(pt, UTCDateTime):
         errors.append("Wrong out picktime object")
-    if pt != UTCDateTime("2009-08-24T00:20:07.710000"):
+    if pt != UTCDateTime("2009-08-24T00:20:07.700000"):
         errors.append("PickTime do not match!")
     if idx != 370:
         errors.append("PickTime IDX do not match@")

@@ -57,9 +57,9 @@ class REC(object):
         """
         self._calculate_rec_cf()
         # (ascending order min->max) OK!
-        self.idx = np.argmin(self.recfn)   # NEW
+        self.idx = np.nanargmin(self.recfn)   # NEW
         self.pick = (self.wt.stats.starttime +
-                     self.wt.stats.delta * (self.idx + 1))
+                     self.wt.stats.delta * self.idx)
 
     def set_working_trace(self, channel):
         if not isinstance(channel, str):
@@ -68,7 +68,7 @@ class REC(object):
         self.wt = self.st.select(channel=channel)[0]
 
     def get_rec_function(self):
-        if self.recfn:
+        if isinstance(self.recfn, np.ndarray) and self.recfn.size > 0:
             return self.recfn
         else:
             logger.warning("Missing EVALUATION FUNCTION! " +
@@ -165,9 +165,9 @@ class AIC(object):
 
         """
         self._calculate_aic_cf()   # create self.aicfn
-        self.idx = np.argmin(self.aicfn)   # NEW
+        self.idx = np.nanargmin(self.aicfn)   # NEW
         self.pick = (self.wt.stats.starttime +
-                     self.wt.stats.delta * (self.idx + 1))
+                     self.wt.stats.delta * self.idx)
 
     def set_working_trace(self, channel):
         if not isinstance(channel, str):
@@ -176,7 +176,7 @@ class AIC(object):
         self.wt = self.st.select(channel=channel)[0]
 
     def get_aic_function(self):
-        if self.aicfn:
+        if isinstance(self.aicfn, np.ndarray) and self.aicfn.size > 0:
             return self.aicfn
         else:
             logger.warning("Missing EVALUATION FUNCTION! " +

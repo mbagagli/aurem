@@ -56,7 +56,7 @@ def plot_rec(rec_obj,
             #
             zeropad = len(td) - len(_tmp)
             #
-            inax.plot(tv, np.pad(_tmp, (zeropad, 0), mode='constant',
+            inax.plot(tv, np.pad(_tmp, (0, zeropad), mode='constant',
                                  constant_values=(np.nan,)),
                       color="teal",
                       linewidth=1,
@@ -135,7 +135,7 @@ def plot_aic(aic_obj,
             #
             zeropad = len(td) - len(_tmp)
             #
-            inax.plot(tv, np.pad(_tmp, (zeropad, 0), mode='constant',
+            inax.plot(tv, np.pad(_tmp, (0, zeropad), mode='constant',
                                  constant_values=(np.nan,)),
                       color="teal",
                       linewidth=1,
@@ -181,9 +181,6 @@ def plot_aic(aic_obj,
         plt.show()
     #
     return inax
-
-
-
 
 
 # ================== TIPS
