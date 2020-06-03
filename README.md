@@ -2,10 +2,11 @@
 
 _**Au**to **Re**gressive **M**odels for seismic phase picking_
 
--------------------------------------------------------
-Version: 0.1.7
-Author: Matteo Bagagli
-Date: 11/2019
+**Version:** 0.1.8
+
+**Author:** Matteo Bagagli
+
+**Date:** 06/2020
 
 
 ### Introduction

@@ -1,3 +1,4 @@
+import copy
 import numpy as np
 import logging
 import matplotlib.pyplot as plt
@@ -33,26 +34,26 @@ def plot_rec(rec_obj,
              normalize=True,
              axtitle="AUREM picks: REC",
              show=False):
-    """ Plotting function for REC auto-regressive method.
-
-    """
-
+    """ Plotting function for REC auto-regressive method. """
     if not plot_ax:
         inax = plt.axes()
     else:
         inax = plot_ax
 
     # Creating time vector and trace data
-    tv = rec_obj.wt.times()
-    td = rec_obj.wt.data
+    newTrace = rec_obj.wt.copy()
+    tv = newTrace.times()
+    td = newTrace.data
+
     if normalize:
         td = _normalize_trace(td, rangeVal=[-1, 1])
 
     # -------------------------- Carachteristic function
     if plot_cf:
         if rec_obj.recfn.any():
+            _wa = copy.deepcopy(rec_obj.recfn)
             if normalize:
-                _tmp = _normalize_trace(rec_obj.recfn, rangeVal=[0, 1])
+                _tmp = _normalize_trace(_wa, rangeVal=[0, 1])
             #
             zeropad = len(td) - len(_tmp)
             #
@@ -112,26 +113,26 @@ def plot_aic(aic_obj,
              normalize=True,
              axtitle="AUREM picks: AIC",
              show=False):
-    """ Plotting function for REC auto-regressive method.
-
-    """
-
+    """ Plotting function for AIC auto-regressive method. """
     if not plot_ax:
         inax = plt.axes()
     else:
         inax = plot_ax
 
     # Creating time vector and trace data
-    tv = aic_obj.wt.times()
-    td = aic_obj.wt.data
+    newTrace = aic_obj.wt.copy()
+    tv = newTrace.times()
+    td = newTrace.data
+
     if normalize:
         td = _normalize_trace(td, rangeVal=[-1, 1])
 
     # -------------------------- Carachteristic function
     if plot_cf:
         if aic_obj.aicfn.any():
+            _wa = copy.deepcopy(aic_obj.aicfn)
             if normalize:
-                _tmp = _normalize_trace(aic_obj.aicfn, rangeVal=[0, 1])
+                _tmp = _normalize_trace(_wa, rangeVal=[0, 1])
             #
             zeropad = len(td) - len(_tmp)
             #
