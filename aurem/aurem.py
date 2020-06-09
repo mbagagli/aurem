@@ -1,13 +1,42 @@
 import logging
 import numpy as np
+import pathlib
+import ctypes as C
+from obspy import UTCDateTime
 #
 from aurem import plotting as AUPL
-#
-from obspy import UTCDateTime
-from obspy.core.trace import Trace
-from obspy.core.stream import Stream
 
 logger = logging.getLogger(__name__)
+
+
+# -------------------------------------------  Load and Setup C library
+MODULEPATH = pathlib.Path(__file__).parent.absolute()
+
+libname = tuple(MODULEPATH.glob("src/aurem_clib.*.so"))[0]
+myclib = C.CDLL(libname)
+
+# AIC
+myclib.aicp.restype = C.c_int
+myclib.aicp.argtypes = [np.ctypeslib.ndpointer(
+                                        dtype=np.float32, ndim=1,
+                                        flags='C_CONTIGUOUS'), C.c_int,
+                        # OUT
+                        np.ctypeslib.ndpointer(
+                                        dtype=np.float32, ndim=1,
+                                        flags='C_CONTIGUOUS'),
+                        C.POINTER(C.c_int)]
+
+# REC
+myclib.recp.restype = C.c_int
+myclib.recp.argtypes = [np.ctypeslib.ndpointer(
+                                        dtype=np.float32, ndim=1,
+                                        flags='C_CONTIGUOUS'), C.c_int,
+                        # OUT
+                        np.ctypeslib.ndpointer(
+                                        dtype=np.float32, ndim=1,
+                                        flags='C_CONTIGUOUS'),
+                        C.POINTER(C.c_int)]
+# ---------------------------------------------------------------------
 
 
 class REC(object):
@@ -159,13 +188,33 @@ class AIC(object):
                 self.aicfn[ii - 1] = (val1 + val2)
         return True
 
+    # def work_old(self):
+    #     """ This method will create the CF and return the index
+    #         responding to the minimum of the CF.
+
+    #     """
+    #     self._calculate_aic_cf()   # create self.aicfn
+    #     self.idx = np.nanargmin(self.aicfn)   # NEW
+    #     self.pick = (self.wt.stats.starttime +
+    #                  self.wt.stats.delta * self.idx)
+
     def work(self):
         """ This method will create the CF and return the index
             responding to the minimum of the CF.
 
+            Now the calculation of CF and extraction of index is
+            done into a function C-implemented !!!
         """
-        self._calculate_aic_cf()   # create self.aicfn
-        self.idx = np.nanargmin(self.aicfn)   # NEW
+        pminidx = C.c_int()
+        tmparr = np.ascontiguousarray(self.wt.data, np.float32)
+        self.aicfn = np.zeros(self.wt.data.size - 1,
+                              dtype=np.float32, order="C")
+        ret = myclib.aicp(tmparr, self.wt.data.size,
+                          self.aicfn, C.byref(pminidx))
+        if ret != 0:
+            raise MemoryError("Something wrong with AIC picker")
+        #
+        self.idx = pminidx.value
         self.pick = (self.wt.stats.starttime +
                      self.wt.stats.delta * self.idx)
 

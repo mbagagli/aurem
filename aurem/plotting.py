@@ -131,6 +131,11 @@ def plot_aic(aic_obj,
     if plot_cf:
         if aic_obj.aicfn.any():
             _wa = copy.deepcopy(aic_obj.aicfn)
+            # GoingToC: replace INF at the start and end with adiacent
+            #           values for plotting reasons
+            _wa[0] = _wa[1]
+            _wa[-1] = _wa[-2]
+
             if normalize:
                 _tmp = _normalize_trace(_wa, rangeVal=[0, 1])
             #
