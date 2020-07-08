@@ -13,7 +13,7 @@ cmodule = Extension('aurem/src/aurem_clib',
 
 setup(
     name="aurem",
-    version="1.0.0",
+    version="1.0.1",
     author="Matteo Bagagli",
     author_email="matteo.bagagli@erdw.ethz.com",
     description="Auto REgressive Models for time series transient identification",

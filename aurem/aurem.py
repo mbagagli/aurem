@@ -212,11 +212,18 @@ class AIC(object):
         ret = myclib.aicp(tmparr, self.wt.data.size,
                           self.aicfn, C.byref(pminidx))
         if ret != 0:
-            raise MemoryError("Something wrong with AIC picker")
+            raise MemoryError("Something wrong with AIC picker C-routine")
         #
         self.idx = pminidx.value
-        self.pick = (self.wt.stats.starttime +
-                     self.wt.stats.delta * self.idx)
+        if self.idx != 0 and isinstance(self.idx, int):
+            # pick found
+            logger.debug("AIC found pick")
+            self.pick = (self.wt.stats.starttime +
+                         self.wt.stats.delta * self.idx)
+        else:
+            # if idx == 0, it means inside C routine it didn't pick
+            logger.debug("AIC didn't found pick")
+            self.pick = None
 
     def set_working_trace(self, channel):
         if not isinstance(channel, str):
@@ -228,25 +235,28 @@ class AIC(object):
         if isinstance(self.aicfn, np.ndarray) and self.aicfn.size > 0:
             return self.aicfn
         else:
-            logger.warning("Missing EVALUATION FUNCTION! " +
-                           "Run the work method first!")
+            raise AttributeError("Missing EVALUATION FUNCTION! " +
+                                 "Run the work method first!")
 
     def get_pick_index(self):
-        if self.idx:
+        if self.idx is None:
+            raise AttributeError("Missing INDEX! " +
+                                 "Run the work method first!")
+        #
+        if isinstance(self.idx, int):
             return self.idx
         else:
-            logger.warning("Missing INDEX! " +
-                           "Run the work method first!")
+            raise TypeError("INDEX is not an integer: %s" %
+                            str(type(self.idx)))
 
     def get_pick(self):
-        if self.pick:
-            if isinstance(self.pick, UTCDateTime):
-                return self.pick
-            else:
-                raise TypeError
+        if self.idx is None:
+            raise AttributeError("Missing PICK! " +
+                                 "Run the work method first!")
         else:
-            logger.warning("Missing PICK! " +
-                           "Run the work method first!")
+            # At this stage, it can be already UTCDateTime or None.
+            # Work method took car
+            return self.pick
 
     def plot(self):
         """ Wrapper around the plot_aic function in plot method
