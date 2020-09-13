@@ -2,6 +2,7 @@ import logging
 import numpy as np
 import pathlib
 import ctypes as C
+import copy
 from obspy import UTCDateTime
 #
 from aurem import plotting as AUPL
@@ -231,9 +232,22 @@ class AIC(object):
         #
         self.wt = self.st.select(channel=channel)[0]
 
-    def get_aic_function(self):
+    def get_aic_function(self, mode="real"):
+        """
+        mode could be either 'real' or 'plot' (for matplotlib etc..).
+        Mode PLOT return a deepcopy modified of the real one
+        """
         if isinstance(self.aicfn, np.ndarray) and self.aicfn.size > 0:
-            return self.aicfn
+            if mode.lower() == 'real':
+                return self.aicfn
+            elif mode.lower() == 'plot':
+                _wa = copy.deepcopy(self.aicfn)
+                # GoingToC: replace INF at the start and end with adiacent
+                #           values for plotting reasons
+                _wa[0] = _wa[1]
+                _wa[-1] = _wa[-2]
+                return _wa
+            raise ValueError("Mode must be either 'real' or 'plot'")
         else:
             raise AttributeError("Missing EVALUATION FUNCTION! " +
                                  "Run the work method first!")
