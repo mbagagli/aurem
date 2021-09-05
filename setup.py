@@ -29,7 +29,7 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: Unix",
-        "Operating System :: OSX",
+        "Operating System :: MacOS",
         "Intended Audience :: Science/Research",
     ],
     ext_modules=[cmodule]
