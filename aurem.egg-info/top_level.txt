@@ -1,0 +1,2 @@
+aurem
+aurem/src/aurem_clib

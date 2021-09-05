@@ -1,0 +1,17 @@
+MANIFEST.in
+README.md
+requirements.txt
+setup.py
+aurem/__init__.py
+aurem/pickers.py
+aurem/plotting.py
+aurem.egg-info/PKG-INFO
+aurem.egg-info/SOURCES.txt
+aurem.egg-info/dependency_links.txt
+aurem.egg-info/requires.txt
+aurem.egg-info/top_level.txt
+aurem/src/aurem_clib.c
+tests/test_aurem.py
+tests/__pycache__/test_aurem.cpython-36-pytest-5.4.2.pyc
+tests/__pycache__/test_aurem.cpython-37-pytest-6.2.5.pyc
+tests/__pycache__/test_aurem.cpython-39-pytest-6.2.5.pyc
