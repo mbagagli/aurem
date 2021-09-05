@@ -1,19 +1,30 @@
+[![travis-build](https://app.travis-ci.com/mbagagli/aurem.svg?branch=master)](https://app.travis-ci.com/mbagagli/aurem)
+
 # AuReM picker
 
 _**Au**to **Re**gressive **M**odels for seismic phase picking_
 
-**Version:** 1.0.2
+**Version:** 1.1.0
 
 **Author:** Matteo Bagagli
 
-**Date:** 09/2020
+**Date:** 09/2021
 
 
 ### Introduction
 
-This package provides a variety of **Au**to **Re**gressive **M**odels for picking purposes.
+This package provides a variety of **AU**to **RE**gressive **M**odels seismic pickers.
+It contains the AIC and REC picking algorithm, and their **CF calculations** are fully **written in C** for faster run times "under the hood".
+But, you'll just need to use python ... :)
 
-If you prefer you can create a python environment with conda or pyenv:
+See references for more details.
+
+### Setup
+
+Currently there are 2 different ways to install the package.
+
+#### Developer
+If you prefer you can create a python environment with conda or pyenv, and then clone the project
 
 ```
 $ conda create -n aurem python=3.7
@@ -24,24 +35,19 @@ $ pip install .
 $ pip install pytest ; pytest
 ```
 
-Example of usage can be extracted from `./tests/test_aurem.py` for both REC and AIC objects
+Jupyter notebook example and tutorials can be found in the project's `books` folder.
 Library dependencies are stored in `requirements.txt`
 
+Contributors are welcome as well as any suggestion for the project improvement!
+
+#### PyPI
 From version `1.1.0` the package is hosted to PyPI repository. Therefore, once the environment is created, you would just need to type:
 
 ```
 $ conda activate aurem
 $ pip install aurem
 ```
-
 and be ready to go ...
-
-### AR models
-
-In this distribution we use the REC and AIC models.
-Ideally, the minimum of those model-CFs time series represent a _pronounced_ transient arrival in the time-series.
-
-For the AIC models we use two approaches:
 
 ### References
 
@@ -50,9 +56,3 @@ For the AIC models we use two approaches:
 
 **REC**
 - Madarshahian at al. 2020: Bayesian Estimation of Acoustic Emission Arrival Times for Source Localization
-
-_This algorithm acronyms stands for "reciprocal-aic" picker, similar to the above, but should be slightly more precise with micro-earthquakes_
-
-
-
-
