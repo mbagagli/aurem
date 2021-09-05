@@ -1,8 +1,8 @@
 [![travis-build](https://app.travis-ci.com/mbagagli/aurem.svg?branch=master)](https://app.travis-ci.com/mbagagli/aurem)
 
-# AuReM picker
+# AUREM
 
-_**Au**to **Re**gressive **M**odels for seismic phase picking_
+**Au**to **Re**gressive **M**odels for seismic phase picking
 
 **Version:** 1.1.0
 
