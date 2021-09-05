@@ -1,4 +1,4 @@
 __name__ = "aurem"
 __author__ = "Matteo Bagagli"
-__version__ = "1.0.2"
-__date__ = "09.2020 @ ETH-Zurich"
+__version__ = "1.1.0"
+__date__ = "08.2021 @ ETH-Zurich"

@@ -11,11 +11,18 @@ logger = logging.getLogger(__name__)
 # =======================  Common
 
 def _normalize_trace(workList, rangeVal=[-1, 1]):
-    ''' This simple method will normalize the trace between rangeVal.
-        Simply by scaling everything...
-        *** INPUT MUST BE A list/tuple object
+    """Normalize array between 2 values
 
-    '''
+    This function normalize the trace between 2 numbers defined in input
+
+    Inputs:
+        workList (np.ndarray, list, tuple): input array to normalize
+        rangeVal (list, tuple): min and max range of normalization
+
+    Returns:
+        worklist (np.ndarray, list, tuple): normalized input array.
+
+    """
     minVal = min(workList)
     maxVal = max(workList)
     workList[:] = [((x - minVal) / (maxVal - minVal)) *
@@ -32,9 +39,28 @@ def plot_rec(rec_obj,
              plot_pick=True,
              plot_additional_picks={},
              normalize=True,
-             axtitle="AUREM picks: REC",
+             axtitle="AUREM picker: REC",
              show=False):
-    """ Plotting function for REC auto-regressive method. """
+    """Plotting function for REC auto-regressive method.
+
+    Args:
+        rec_obj (aurem.picker.REC): REC picker object
+
+    Optionals:
+        plot_ax (matplotlib.pyplot.axes): handle of the axes where plot
+        plot_cf (bool): either plot or not the CF of REC
+        plot_pick (bool): either plot or not the final REC-pick
+        plot_additional_picks (dict): key-args dict with
+            'name': UTCDateTime scheme.
+        normalize (bool): if True normalize between -1,1 the trace and
+            from 0 to 1 the (optional) REC-CF.
+        axtitle (str): axis title
+        show (bool): if True plot on screen the resulting figure
+
+    Returns:
+        inax (matplotlib.pyplot.axes): handle of the active axis
+
+    """
     if not plot_ax:
         inax = plt.axes()
     else:
@@ -52,6 +78,11 @@ def plot_rec(rec_obj,
     if plot_cf:
         if rec_obj.recfn.any():
             _wa = copy.deepcopy(rec_obj.recfn)
+            # GoingToC: replace INF at the start and end with adiacent
+            #           values for plotting reasons
+            _wa[0] = _wa[1]
+            _wa[-1] = _wa[-2]
+
             if normalize:
                 _tmp = _normalize_trace(_wa, rangeVal=[0, 1])
             #
@@ -111,9 +142,29 @@ def plot_aic(aic_obj,
              plot_pick=True,
              plot_additional_picks={},
              normalize=True,
-             axtitle="AUREM picks: AIC",
+             axtitle="AUREM picker: AIC",
              show=False):
-    """ Plotting function for AIC auto-regressive method. """
+    """Plotting function for AIC auto-regressive method.
+
+    Args:
+        aic_obj (aurem.picker.AIC): AIC picker object
+
+    Optionals:
+        plot_ax (matplotlib.pyplot.axes): handle of the axes where plot
+        plot_cf (bool): either plot or not the CF of AIC
+        plot_pick (bool): either plot or not the final AIC-pick
+        plot_additional_picks (dict): key-args dict with
+            'name': UTCDateTime scheme.
+        normalize (bool): if True normalize between -1,1 the trace and
+            from 0 to 1 the (optional) AIC-CF.
+        axtitle (str): axis title
+        show (bool): if True plot on screen the resulting figure
+
+    Returns:
+        inax (matplotlib.pyplot.axes): handle of the active axis
+
+    """
+
     if not plot_ax:
         inax = plt.axes()
     else:
