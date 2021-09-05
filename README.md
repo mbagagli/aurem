@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/403320617.svg)](https://zenodo.org/badge/latestdoi/403320617)
 [![travis-build](https://app.travis-ci.com/mbagagli/aurem.svg?branch=master)](https://app.travis-ci.com/mbagagli/aurem)
 
 # AUREM
